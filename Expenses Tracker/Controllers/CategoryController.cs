@@ -26,7 +26,7 @@ namespace Expenses_Tracker.Controllers
                         Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
         }
 
-        // GET: Category/Create
+        // GET: Category/AddOrEdit
         public IActionResult AddOrEdit(int id = 0)
         {
             if (id == 0)
@@ -37,7 +37,7 @@ namespace Expenses_Tracker.Controllers
                 return View(_context.Categories.Find(id));
         }
 
-        // POST: Category/Create
+        // POST: Category/AddOrEdit
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
