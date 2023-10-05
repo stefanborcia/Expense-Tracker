@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<Expenses_Tracker.Models.Category>
 
-@{
-    ViewData["Title"] = "Index";
-}
 <div class="row">
     <div class="col-md-7">
         <ejs-grid id="categories" dataSource="@Model" gridLines="None" allowSorting="true" allowPaging="true">
@@ -34,7 +31,8 @@
             <i class="fa-solid fa-pen fa-lg"></i>
         </a>
         <form action="/Category/Delete/${CategoryId}" method="post">
-            <button type="submit" class="btn btn-sm btn-link no-a-decoration">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-sm btn-link no-a-decoration" onclick="return confirm("Are you sure to delete this record?")">
                 <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
             </button>
         </form>
