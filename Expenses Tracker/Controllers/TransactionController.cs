@@ -63,7 +63,7 @@ namespace Expenses_Tracker.Controllers
             {
                 _context.Transactions.Remove(transaction);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
