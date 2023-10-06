@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using Microsoft.Identity.Client;
 
 namespace Expenses_Tracker.Models
@@ -36,7 +37,7 @@ namespace Expenses_Tracker.Models
         {
             get
             {
-                return ((Category == null || Category.Type == "Expense")? "- " :  "+ ") + Amount.ToString("C0");
+                return ((Category == null || Category.Type == "Expense")? "- " :  "+ ") + Amount.ToString("C", CultureInfo.GetCultureInfo("en-ie"));
             }
         }
 
