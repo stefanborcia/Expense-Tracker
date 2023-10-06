@@ -23,5 +23,6 @@ namespace Expenses_Tracker.Models
                 return this.Icon + " " + this.Title;
             }
         }
+
     }
 }
