@@ -70,7 +70,7 @@ namespace Expenses_Tracker.Controllers
 
             //Expense
             List<SplineChartData> ExpenseSummary = selectedTransactions
-                .Where(i => i.Category.Type == "Income")
+                .Where(i => i.Category.Type == "Expense")
                 .GroupBy(j => j.Date)
                 .Select(k => new SplineChartData()
                 {
