@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Threading.Tasks.Dataflow;
 
 namespace Expenses_Tracker.Controllers
 {
@@ -41,7 +42,69 @@ namespace Expenses_Tracker.Controllers
             int balance = totalIncome - totalExpense;
             ViewBag.balance = balance.ToString("C", CultureInfo.GetCultureInfo("en-ie"));
 
+            //Doughnut Chart - Filter Expense By Category
+            ViewBag.DoughnutChartData = selectedTransactions
+                .Where(e => e.Category.Type == "Expense")
+                .GroupBy(c =>c.Category.CategoryId)
+                .Select( k => new
+                {
+                    categoryTitleWithIcon = k.First().Category.Icon + " " + k.First().Category.Title,
+                    amount =k.Sum(s => s.Amount),
+                    formattedAmount = k.Sum(s => s.Amount).ToString("C", CultureInfo.GetCultureInfo("en-ie"))
+                })
+                .OrderByDescending(o=>o.amount)
+                .ToList();
+
+
+            //Spline Chart - Income vs Expense
+            //Income
+            List<SplineChartData> IncomeSummary = selectedTransactions
+                .Where(i => i.Category.Type == "Income")
+                .GroupBy(j => j.Date)
+                .Select(k => new SplineChartData()
+                {
+                    day = k.First().Date.ToString("dd-MMM"),
+                    income = k.Sum(l => l.Amount)
+                })
+                .ToList();
+
+            //Expense
+            List<SplineChartData> ExpenseSummary = selectedTransactions
+                .Where(i => i.Category.Type == "Income")
+                .GroupBy(j => j.Date)
+                .Select(k => new SplineChartData()
+                {
+                    day = k.First().Date.ToString("dd-MMM"),
+                    expense = k.Sum(l => l.Amount)
+                })
+                .ToList();
+
+            //Combine Income and Expense
+            string[] lastSevenDays = Enumerable.Range(0, 7)
+                .Select(i => startDate.AddDays(i).ToString("dd-MMM"))
+                .ToArray();
+
+            ViewBag.SplineChartData = from day in lastSevenDays
+                join income in IncomeSummary on day equals income.day into dayIncomeJoined
+                from income in dayIncomeJoined.DefaultIfEmpty()
+                join expense in ExpenseSummary on day equals expense.day into expenseJoined
+                from expense in expenseJoined.DefaultIfEmpty()
+                select new
+                {
+                    day = day,
+                    income = income == null ? 0 : income.income,
+                    expense = expense == null ? 0 : expense.expense
+                };
+                
+
             return View();
+        }
+
+        public class SplineChartData
+        {
+            public string day;
+            public int income;
+            public int expense;
         }
     }
 }
