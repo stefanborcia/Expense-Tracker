@@ -267,3 +267,27 @@ img.profile-pic {
 .profile-wrapper .titles {
     line-height: 1;
 }
+
+/*Logo*/
+.logo-wrapper {
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.app-logo {
+    padding: 10px 10px;
+}
+
+/*Sidebar-Toggler*/
+#sidebar-toggler {
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+#sidebar-toggler:hover {
+    cursor: pointer;
+    background-color: #48545f14;
+    transform: scale(1.05) translateZ(0px);
+}
