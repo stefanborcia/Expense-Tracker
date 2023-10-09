@@ -23,10 +23,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
-builder.Services.AddScoped<ILogin, AuthenticateLogin>();
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
