@@ -1,6 +1,5 @@
 using Expenses_Tracker.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Expenses_Tracker.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,10 +21,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
 
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    options.Password.RequireUppercase = false;
-});
+
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
+
 
 var app = builder.Build();
 
