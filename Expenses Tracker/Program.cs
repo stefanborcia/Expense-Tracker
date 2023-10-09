@@ -1,4 +1,5 @@
 using Expenses_Tracker.Models;
+using Expenses_Tracker.Repository;
 using Microsoft.EntityFrameworkCore;
 using Expenses_Tracker.Areas.Identity.Data;
 
@@ -23,6 +24,7 @@ builder.Services.AddRazorPages();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
+builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 
 
 var app = builder.Build();
