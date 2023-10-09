@@ -2,6 +2,7 @@ using Expenses_Tracker.Models;
 using Expenses_Tracker.Repository;
 using Microsoft.EntityFrameworkCore;
 using Expenses_Tracker.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ var connectionString = builder.Configuration.GetConnectionString("MyConnection")
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Add services to the container.
@@ -25,6 +26,13 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.EnsureDeleted();
+    dbContext.Database.EnsureCreated();
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -35,6 +43,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",

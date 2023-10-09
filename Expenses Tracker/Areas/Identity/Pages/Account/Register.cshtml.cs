@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using Expenses_Tracker.Areas.Identity.Data;
 
 namespace Expenses_Tracker.Areas.Identity.Pages.Account
@@ -131,6 +130,10 @@ namespace Expenses_Tracker.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 /*added code*/
                 user.LastName = Input.LastName;
+                user.ConfirmPassword = Input.ConfirmPassword;
+                user.Email = Input.Email;
+                user.Password=Input.Password;
+                user.PasswordHash = Input.Password;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
