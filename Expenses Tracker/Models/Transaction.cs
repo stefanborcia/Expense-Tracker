@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
-using Microsoft.Identity.Client;
 
 namespace Expenses_Tracker.Models
 {
