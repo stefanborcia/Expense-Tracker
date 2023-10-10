@@ -1,27 +1,20 @@
-﻿using Expenses_Tracker.Areas.Identity.Data;
-using Expenses_Tracker.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Expenses_Tracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Expenses_Tracker.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            this._userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            ViewData["UserID"] = _userManager.GetUserId(this.User);
             return View();
         }
 
