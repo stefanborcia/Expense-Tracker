@@ -29,17 +29,17 @@ namespace Expenses_Tracker.Controllers
             int totalIncome = selectedTransactions
                 .Where(t => t.Category.Type == "Income")
                 .Sum(a => a.Amount);
-            ViewBag.totalIncome = totalIncome.ToString("C", CultureInfo.GetCultureInfo("en-ie")); 
+            ViewBag.totalIncome = totalIncome.ToString("C", CultureInfo.GetCultureInfo("fr-FR")); 
             
             //Total expense
             int totalExpense = selectedTransactions
                 .Where(t => t.Category.Type == "Expense")
                 .Sum(a => a.Amount);
-            ViewBag.totalExpense = totalExpense.ToString("C", CultureInfo.GetCultureInfo("en-ie"));
+            ViewBag.totalExpense = totalExpense.ToString("C", CultureInfo.GetCultureInfo("fr-FR"));
 
             //Balance
             int balance = totalIncome - totalExpense;
-            ViewBag.balance = balance.ToString("C", CultureInfo.GetCultureInfo("en-ie"));
+            ViewBag.balance = balance.ToString("C", CultureInfo.GetCultureInfo("fr-FR"));
 
             //Doughnut Chart - Filter Expense By Category
             ViewBag.DoughnutChartData = selectedTransactions
@@ -49,7 +49,7 @@ namespace Expenses_Tracker.Controllers
                 {
                     categoryTitleWithIcon = k.First().Category.Icon + " " + k.First().Category.Title,
                     amount =k.Sum(s => s.Amount),
-                    formattedAmount = k.Sum(s => s.Amount).ToString("C", CultureInfo.GetCultureInfo("en-ie"))
+                    formattedAmount = k.Sum(s => s.Amount).ToString("C", CultureInfo.GetCultureInfo("fr-FR"))
                 })
                 .OrderByDescending(o=>o.amount)
                 .ToList();
